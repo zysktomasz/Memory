@@ -168,7 +168,7 @@ namespace Memory
         {
             //Process.Start(Application.ResourceAssembly.Location);
             //Application.Current.Shutdown();
-            //timeInS = 0;
+            timeInS = 0;
             //firstClick = false;
             //UserConfig.ClickedCount = 0;
             //UserConfig.RevealedCards = 0;
