@@ -5,8 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Memory"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Gra Memory" Height="428.956" Width="645.202">
     <Grid>
-        
+        <Rectangle x:Name="rectangle_1" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="80" Margin="81,40,0,0" Stroke="Black" VerticalAlignment="Top" Width="80"/>
+        <Rectangle x:Name="rectangle_2" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="80" Margin="180,40,0,0" Stroke="Black" VerticalAlignment="Top" Width="80"/>
+        <Rectangle x:Name="rectangle_3" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="80" Margin="280,40,0,0" Stroke="Black" VerticalAlignment="Top" Width="80"/>
+        <Rectangle x:Name="rectangle_4" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="80" Margin="380,40,0,0" Stroke="Black" VerticalAlignment="Top" Width="80"/>
+        <Rectangle x:Name="rectangle_5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="80" Margin="81,140,0,0" Stroke="Black" VerticalAlignment="Top" Width="80"/>
+        <Rectangle x:Name="rectangle_6" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="80" Margin="180,140,0,0" Stroke="Black" VerticalAlignment="Top" Width="80"/>
+        <Rectangle x:Name="rectangle_7" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="80" Margin="280,140,0,0" Stroke="Black" VerticalAlignment="Top" Width="80"/>
+        <Rectangle x:Name="rectangle_8" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="80" Margin="380,140,0,0" Stroke="Black" VerticalAlignment="Top" Width="80"/>
+        <Rectangle x:Name="rectangle_9" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="80" Margin="81,242,0,0" Stroke="Black" VerticalAlignment="Top" Width="80"/>
+        <Rectangle x:Name="rectangle_10" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="80" Margin="180,242,0,0" Stroke="Black" VerticalAlignment="Top" Width="80"/>
+        <Rectangle x:Name="rectangle_11" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="80" Margin="280,242,0,0" Stroke="Black" VerticalAlignment="Top" Width="80"/>
+        <Rectangle x:Name="rectangle_12" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="80" Margin="380,242,0,0" Stroke="Black" VerticalAlignment="Top" Width="80"/>
+        <Button x:Name="przycisk" Content="Button" HorizontalAlignment="Left" Height="26" Margin="523,94,0,0" VerticalAlignment="Top" Width="62" Click="Button_Click"/>
+
     </Grid>
 </Window>
