@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Memory
 {
@@ -23,7 +24,10 @@ namespace Memory
     /// </summary>
     public partial class MainWindow : Window
     {
-        private System.Windows.Threading.DispatcherTimer dispatcherTimer;
+        private DispatcherTimer incorrectCardPairTimer;
+        private DispatcherTimer startGameTimer;
+        int timeInS = 0;
+        bool firstClick = false;
 
         public MainWindow()
         {
@@ -52,12 +56,15 @@ namespace Memory
             Card.GenerateAllCards(RectangleList);
 
 
-            // tworzy timer (2 sekundowy) po wybraniu nieprawidlowej pary
-            dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 2);
+            // tworzy timer (1,2 sekundowy) po wybraniu nieprawidlowej pary
+            incorrectCardPairTimer = new DispatcherTimer();
+            incorrectCardPairTimer.Tick += new EventHandler(incorrectCardPairTimer_Tick);
+            incorrectCardPairTimer.Interval = new TimeSpan(0, 0, 0, 1, 200);
 
-
+            // tworzy timer na rozpoczecie rozgrywki
+            startGameTimer = new DispatcherTimer();
+            startGameTimer.Interval = TimeSpan.FromSeconds(1);
+            startGameTimer.Tick += new EventHandler(startGameTimer_Tick);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -66,9 +73,9 @@ namespace Memory
             przycisk.Content = "XDDDD";
             
         }
-
+        
         // timer po wybraniu niepasujacej pary
-        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        private void incorrectCardPairTimer_Tick(object sender, EventArgs e)
         {
             List<Card> clicked = Card.CardList.Where(element => element.IsClicked).ToList();
             foreach (var card in Card.CardList.Where(element => element.IsClicked).ToList())
@@ -81,7 +88,16 @@ namespace Memory
             // resetuje ilosc kliknietych
             UserConfig.ClickedCount = 0;
             // wylacza timer
-            dispatcherTimer.IsEnabled = false;
+            incorrectCardPairTimer.IsEnabled = false;
+        }
+
+        // timer po wybraniu niepasujacej pary
+        private void startGameTimer_Tick(object sender, EventArgs e)
+        {
+            timeInS += 1;
+            TimeSpan time = TimeSpan.FromSeconds(timeInS);
+            string str = time.ToString(@"hh\:mm\:ss\:fff");
+            labelTime.Content = str;
         }
 
 
@@ -89,6 +105,12 @@ namespace Memory
         // utworzenie eventu
         void Rectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            // sprawdza czy to pierwsze klikniecie na pole (jesli tak, to odpala timer)
+            if(firstClick == false)
+            {
+                firstClick = true;
+                startGameTimer.Start();
+            }
             // jesli mozna kliknac
             // TODO upewnic sie, ze nie klika sie 2 razy tego samego
             if (UserConfig.ClickedCount < 2)
@@ -126,7 +148,10 @@ namespace Memory
 
                         // sprawdza czy wygrano
                         if (UserConfig.CheckForWin())
+                        {
+                            startGameTimer.Stop();
                             MessageBox.Show("GRATULACJE, WYGRANA");
+                        }
 
                         // zmienia flage IsClicked na false (karta nie jest aktywna)
                         clicked[0].IsClicked = false;
@@ -138,7 +163,7 @@ namespace Memory
                         przycisk.Content = "NIE ZGADZA SIE";
 
                         // uruchamia timer 2 sekundowy (czas na zapamietanie ulozenia kart)
-                        dispatcherTimer.Start();
+                        incorrectCardPairTimer.Start();
                     }
 
                     
