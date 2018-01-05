@@ -28,18 +28,23 @@ namespace Memory
             // utworzenie tablicy z dodanymi do projektu zdjeciami Kart
             FileListExtract.FindAllFiles();
 
-            //List<Rectangle> RectangleList = new List<Rectangle>
-            //{
-            //    rectangle_1, rectangle_2, rectangle_3, rectangle_4, rectangle_5,rectangle_6,rectangle_7,rectangle_8,
-            //    rectangle_9,
-            //    rectangle_10,rectangle_11,rectangle_12
-            //};
+            List<Rectangle> RectangleList = new List<Rectangle>
+            {
+                rectangle_1, rectangle_2, rectangle_3, rectangle_4, rectangle_5,rectangle_6,rectangle_7,rectangle_8,
+                rectangle_9,
+                rectangle_10,rectangle_11,rectangle_12
+            };
 
             // dodanie eventow do eventhandlera
+            foreach (var rec in RectangleList)
+            {
+                rec.MouseLeftButtonDown += Rectangle_MouseLeftButtonDown;
+            }
 
-            rectangle_1.MouseLeftButtonDown += Rectangle_MouseLeftButtonDown;
-            rectangle_2.MouseLeftButtonDown += Rectangle_MouseLeftButtonDown;
-            rectangle_3.MouseLeftButtonDown += Rectangle_MouseLeftButtonDown;
+
+            // generuje wszystkie pary karty
+            Card.GenerateAllCards(RectangleList); // dla 12 wolnych pol
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -54,25 +59,38 @@ namespace Memory
         // utworzenie eventu
         void Rectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+
+            Card clickedCard = Card.GetCardByRectangle((Rectangle)sender);
+
             // test czy dziala klikniecie w rectangle
             Rectangle R = (Rectangle)sender;
-            
 
-            // DZIALA DLA Resource OBRAZOW
-            R.Fill = new ImageBrush
+
+
+            clickedCard.CorrespondingRectangle.Fill = new ImageBrush
             {
                 //ImageSource = new BitmapImage(new Uri(@"img\cat_1.png", UriKind.RelativeOrAbsolute))
                 //ImageSource = new BitmapImage(new Uri(
                 //                    "pack://application:,,,/img/1_fish.png"))
 
-                ImageSource = new BitmapImage(new Uri(String.Format("pack://application:,,,/{0}", FileListExtract.FileList[10])
-                                    ))
+                ImageSource = new BitmapImage(clickedCard.ImageUri)
             };
 
-            
-            
-            
-            
+            // DZIALA DLA Resource OBRAZOW
+            //R.Fill = new ImageBrush
+            //{
+            //    //ImageSource = new BitmapImage(new Uri(@"img\cat_1.png", UriKind.RelativeOrAbsolute))
+            //    //ImageSource = new BitmapImage(new Uri(
+            //    //                    "pack://application:,,,/img/1_fish.png"))
+
+            //    ImageSource = new BitmapImage(new Uri(String.Format("pack://application:,,,/{0}", FileListExtract.FileList[10])
+            //                        ))
+            //};
+
+
+
+
+
 
 
         }
