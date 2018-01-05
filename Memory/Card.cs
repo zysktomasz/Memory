@@ -11,16 +11,15 @@ namespace Memory
     {
         public Rectangle CorrespondingRectangle { get; set; }
         public Uri ImageUri { get; set; }
-        public int Occurence { get; set; }
+        public bool IsClicked { get; set; }
 
         public static List<Card> CardList = new List<Card>();
-
 
         public Card(Rectangle correspondingRectangle, Uri imageUri)
         {
             CorrespondingRectangle = correspondingRectangle;
             ImageUri = imageUri;
-            Occurence = 2;
+            IsClicked = false;
             CardList.Add(this);
         }
 
@@ -40,17 +39,18 @@ namespace Memory
                 FileListExtract.FileList.RemoveAt(chosenImage);
 
 
-                //pobiera losowy rectangle (dwukrotnie)
+                // pobiera losowy rectangle i tworzy Card o wybranym wyzej Uri
                 int chosenRectangle = rnd.Next(RectangleList.Count - 1);
                 Card temp = new Card(RectangleList[chosenRectangle], tempUri);
+                // usuwa wybrany rectangle (zeby go nie uzyc ponownie)
                 RectangleList.RemoveAt(chosenRectangle);
 
+                // pobiera kolejny, losowy rectangle i tworzy Card o tym samym Uri co poprzedni (otrzymujemy pare pol o tych samych obiektach)
                 chosenRectangle = rnd.Next(RectangleList.Count - 1);
                 temp = new Card(RectangleList[chosenRectangle], tempUri);
+                // usuwa wybrany rectangle (zeby go nie uzyc ponownie)
                 RectangleList.RemoveAt(chosenRectangle);
 
-
-                //CardList.Add()
             }
 
 
@@ -58,11 +58,6 @@ namespace Memory
 
         }
 
-        public static Card GetCardByRectangle(Rectangle rectangle)
-        {
-            Card temp = CardList.Find(element => element.CorrespondingRectangle == rectangle);
-            return temp;
-        }
 
     }
 }
