@@ -32,6 +32,11 @@ namespace Memory
         public MainWindow()
         {
             InitializeComponent();
+            InitializeMemoryLayout();
+        }
+
+        private void InitializeMemoryLayout()
+        {
 
             // utworzenie listy z dodanymi do projektu zdjeciami Card
             FileListExtract.FindAllFiles();
@@ -56,28 +61,20 @@ namespace Memory
             Card.GenerateAllCards(RectangleList);
 
 
-            // tworzy timer (1,2 sekundowy) po wybraniu nieprawidlowej pary
+            // tworzy timer (0,5 sekundowy) po wybraniu nieprawidlowej pary
             incorrectCardPairTimer = new DispatcherTimer();
             incorrectCardPairTimer.Tick += new EventHandler(incorrectCardPairTimer_Tick);
-            incorrectCardPairTimer.Interval = new TimeSpan(0, 0, 0, 1, 200);
+            incorrectCardPairTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
 
             // tworzy timer na rozpoczecie rozgrywki
             startGameTimer = new DispatcherTimer();
             startGameTimer.Interval = TimeSpan.FromSeconds(1);
             startGameTimer.Tick += new EventHandler(startGameTimer_Tick);
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            
-            przycisk.Content = "XDDDD";
-            
-        }
         
         // timer po wybraniu niepasujacej pary
         private void incorrectCardPairTimer_Tick(object sender, EventArgs e)
         {
-            List<Card> clicked = Card.CardList.Where(element => element.IsClicked).ToList();
             foreach (var card in Card.CardList.Where(element => element.IsClicked).ToList())
             {
                 card.CorrespondingRectangle.Fill = Brushes.AliceBlue;
@@ -142,7 +139,6 @@ namespace Memory
                     // jesli obydwa klikniete pola maja ten sam obraz
                     if(clicked[0].ImageUri == clicked[1].ImageUri)
                     {
-                        przycisk.Content = "GIT";
                         // resetuje licznik aktualnie porownywach kart
                         UserConfig.ClickedCount = 0;
 
@@ -160,22 +156,26 @@ namespace Memory
                     // jesli wybrane karty sa rozne
                     else
                     {
-                        przycisk.Content = "NIE ZGADZA SIE";
 
-                        // uruchamia timer 2 sekundowy (czas na zapamietanie ulozenia kart)
+                        // uruchamia timer (czas na zapamietanie ulozenia kart)
                         incorrectCardPairTimer.Start();
                     }
-
-                    
-                    
                 }
-                
             }
-            
+        }
 
-
-
-
+        private void buttonReset_Click(object sender, RoutedEventArgs e)
+        {
+            //Process.Start(Application.ResourceAssembly.Location);
+            //Application.Current.Shutdown();
+            //timeInS = 0;
+            //firstClick = false;
+            //UserConfig.ClickedCount = 0;
+            //UserConfig.RevealedCards = 0;
+            //Card.CardList.Clear();
+            //startGameTimer.IsEnabled = false;
+            //InitializeComponent();
+            //InitializeMemoryLayout();
         }
     }
 }
