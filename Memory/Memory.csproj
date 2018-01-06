@@ -78,6 +78,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Score.cs" />
     <Compile Include="UserConfig.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -154,6 +155,35 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\ambulance_car.png" />
+    <Resource Include="img\blueberries.png" />
+    <Resource Include="img\bread1.png" />
+    <Resource Include="img\breads.png" />
+    <Resource Include="img\cake.png" />
+    <Resource Include="img\cake1.png" />
+    <Resource Include="img\cake2.png" />
+    <Resource Include="img\cake_big.png" />
+    <Resource Include="img\carrot.png" />
+    <Resource Include="img\coffee.png" />
+    <Resource Include="img\coffeecup_red.png" />
+    <Resource Include="img\coffee_cup_vista.png" />
+    <Resource Include="img\cookie.png" />
+    <Resource Include="img\cup_coffee.png" />
+    <Resource Include="img\ferrari.png" />
+    <Resource Include="img\ford_gt2.png" />
+    <Resource Include="img\french_fries.png" />
+    <Resource Include="img\helicoptermedical.png" />
+    <Resource Include="img\lettuce.png" />
+    <Resource Include="img\muffin.png" />
+    <Resource Include="img\mug.png" />
+    <Resource Include="img\source_java.png" />
+    <Resource Include="img\sugar_snap.png" />
+    <Resource Include="img\sup.png" />
+    <Resource Include="img\toast.png" />
+    <Resource Include="img\travel_bus.png" />
+    <Resource Include="img\truck.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

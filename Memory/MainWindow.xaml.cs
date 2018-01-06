@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -47,7 +48,10 @@ namespace Memory
             {
                 rectangle_1, rectangle_2, rectangle_3, rectangle_4,
                 rectangle_5, rectangle_6, rectangle_7, rectangle_8,
-                rectangle_9, rectangle_10, rectangle_11, rectangle_12
+                rectangle_9, rectangle_10, rectangle_11, rectangle_12,
+                rectangle_13, rectangle_14, rectangle_15, rectangle_16,
+                rectangle_17, rectangle_18, rectangle_19, rectangle_20,
+                rectangle_21, rectangle_22, rectangle_23, rectangle_24
             };
 
             // dodanie eventhandlerow dla kazdego pola

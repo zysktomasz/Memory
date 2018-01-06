@@ -5,24 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Memory"
         mc:Ignorable="d"
-        Title="Gra Memory" Height="428.956" Width="645.202">
+        Title="Gra Memory" Height="544.156" Width="766.002">
     <Grid>
-        <Rectangle x:Name="rectangle_1" Fill="#F0F8FF" HorizontalAlignment="Left" Height="80" Margin="81,40,0,0" Stroke="Black" VerticalAlignment="Top" Width="80" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
-        <Rectangle x:Name="rectangle_2" Fill="#F0F8FF" HorizontalAlignment="Left" Height="80" Margin="180,40,0,0" Stroke="Black" VerticalAlignment="Top" Width="80" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
-        <Rectangle x:Name="rectangle_3" Fill="#F0F8FF" HorizontalAlignment="Left" Height="80" Margin="280,40,0,0" Stroke="Black" VerticalAlignment="Top" Width="80" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
-        <Rectangle x:Name="rectangle_4" Fill="#F0F8FF" HorizontalAlignment="Left" Height="80" Margin="380,40,0,0" Stroke="Black" VerticalAlignment="Top" Width="80" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
-        <Rectangle x:Name="rectangle_5" Fill="#F0F8FF" HorizontalAlignment="Left" Height="80" Margin="81,140,0,0" Stroke="Black" VerticalAlignment="Top" Width="80" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
-        <Rectangle x:Name="rectangle_6" Fill="#F0F8FF" HorizontalAlignment="Left" Height="80" Margin="180,140,0,0" Stroke="Black" VerticalAlignment="Top" Width="80" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
-        <Rectangle x:Name="rectangle_7" Fill="#F0F8FF" HorizontalAlignment="Left" Height="80" Margin="280,140,0,0" Stroke="Black" VerticalAlignment="Top" Width="80" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
-        <Rectangle x:Name="rectangle_8" Fill="#F0F8FF" HorizontalAlignment="Left" Height="80" Margin="380,140,0,0" Stroke="Black" VerticalAlignment="Top" Width="80" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
-        <Rectangle x:Name="rectangle_9" Fill="#F0F8FF" HorizontalAlignment="Left" Height="80" Margin="81,242,0,0" Stroke="Black" VerticalAlignment="Top" Width="80" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
-        <Rectangle x:Name="rectangle_10" Fill="#F0F8FF" HorizontalAlignment="Left" Height="80" Margin="180,242,0,0" Stroke="Black" VerticalAlignment="Top" Width="80" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
-        <Rectangle x:Name="rectangle_11" Fill="#F0F8FF" HorizontalAlignment="Left" Height="80" Margin="280,242,0,0" Stroke="Black" VerticalAlignment="Top" Width="80" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
-        <Rectangle x:Name="rectangle_12" Fill="#F0F8FF" HorizontalAlignment="Left" Height="80" Margin="380,242,0,0" Stroke="Black" VerticalAlignment="Top" Width="80" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
-        <Label x:Name="labelTime" Content="00:00:00" HorizontalAlignment="Left" Margin="477,85,0,0" VerticalAlignment="Top" FontSize="36" FontWeight="Bold" FontStyle="Italic"/>
-        <Button x:Name="buttonReset" Content="Reset" HorizontalAlignment="Left" Height="38" Margin="477,148,0,0" VerticalAlignment="Top" Width="152" Click="buttonReset_Click"/>
-        <Label Content="Kliknięć: " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="477,40,0,0" FontSize="16"/>
-        <Label x:Name="labelClicks" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="563,40,0,0" FontSize="16" FontWeight="Bold" FontStyle="Italic"/>
+        <Rectangle x:Name="rectangle_1" Fill="#F0F8FF" HorizontalAlignment="Left" Height="61" Margin="43,63,0,0" Stroke="Black" VerticalAlignment="Top" Width="73" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
+        <Rectangle x:Name="rectangle_2" Fill="#F0F8FF" HorizontalAlignment="Left" Height="61" Margin="134,63,0,0" Stroke="Black" VerticalAlignment="Top" Width="73" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
+        <Rectangle x:Name="rectangle_3" Fill="#F0F8FF" HorizontalAlignment="Left" Height="61" Margin="225,63,0,0" Stroke="Black" VerticalAlignment="Top" Width="73" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
+        <Rectangle x:Name="rectangle_4" Fill="#F0F8FF" HorizontalAlignment="Left" Height="61" Margin="317,63,0,0" Stroke="Black" VerticalAlignment="Top" Width="73" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
+        <Rectangle x:Name="rectangle_6" Fill="#F0F8FF" HorizontalAlignment="Left" Height="61" Margin="43,140,0,0" Stroke="Black" VerticalAlignment="Top" Width="73" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
+        <Rectangle x:Name="rectangle_7" Fill="#F0F8FF" HorizontalAlignment="Left" Height="61" Margin="134,140,0,0" Stroke="Black" VerticalAlignment="Top" Width="73" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
+        <Rectangle x:Name="rectangle_8" Fill="#F0F8FF" HorizontalAlignment="Left" Height="61" Margin="225,140,0,0" Stroke="Black" VerticalAlignment="Top" Width="73" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
+        <Rectangle x:Name="rectangle_9" Fill="#F0F8FF" HorizontalAlignment="Left" Height="61" Margin="317,140,0,0" Stroke="Black" VerticalAlignment="Top" Width="73" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
+        <Rectangle x:Name="rectangle_11" Fill="#F0F8FF" HorizontalAlignment="Left" Height="62" Margin="43,218,0,0" Stroke="Black" VerticalAlignment="Top" Width="73" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
+        <Rectangle x:Name="rectangle_12" Fill="#F0F8FF" HorizontalAlignment="Left" Height="62" Margin="134,218,0,0" Stroke="Black" VerticalAlignment="Top" Width="73" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
+        <Rectangle x:Name="rectangle_13" Fill="#F0F8FF" HorizontalAlignment="Left" Height="62" Margin="225,218,0,0" Stroke="Black" VerticalAlignment="Top" Width="73" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
+        <Rectangle x:Name="rectangle_14" Fill="#F0F8FF" HorizontalAlignment="Left" Height="62" Margin="317,218,0,0" Stroke="Black" VerticalAlignment="Top" Width="73" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
+        <Rectangle x:Name="rectangle_5" Fill="#F0F8FF" HorizontalAlignment="Left" Height="61" Margin="406,63,0,0" Stroke="Black" VerticalAlignment="Top" Width="73" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
+        <Rectangle x:Name="rectangle_10" Fill="#F0F8FF" HorizontalAlignment="Left" Height="61" Margin="406,140,0,0" Stroke="Black" VerticalAlignment="Top" Width="73" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
+        <Rectangle x:Name="rectangle_15" Fill="#F0F8FF" HorizontalAlignment="Left" Height="62" Margin="406,218,0,0" Stroke="Black" VerticalAlignment="Top" Width="73" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
+        <Rectangle x:Name="rectangle_16" Fill="#F0F8FF" HorizontalAlignment="Left" Height="61" Margin="43,293,0,0" Stroke="Black" VerticalAlignment="Top" Width="73" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
+        <Rectangle x:Name="rectangle_17" Fill="#F0F8FF" HorizontalAlignment="Left" Height="61" Margin="134,293,0,0" Stroke="Black" VerticalAlignment="Top" Width="73" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
+        <Rectangle x:Name="rectangle_18" Fill="#F0F8FF" HorizontalAlignment="Left" Height="61" Margin="225,293,0,0" Stroke="Black" VerticalAlignment="Top" Width="73" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
+        <Rectangle x:Name="rectangle_19" Fill="#F0F8FF" HorizontalAlignment="Left" Height="61" Margin="317,293,0,0" Stroke="Black" VerticalAlignment="Top" Width="73" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
+        <Rectangle x:Name="rectangle_21" Fill="#F0F8FF" HorizontalAlignment="Left" Height="62" Margin="43,371,0,0" Stroke="Black" VerticalAlignment="Top" Width="73" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
+        <Rectangle x:Name="rectangle_22" Fill="#F0F8FF" HorizontalAlignment="Left" Height="62" Margin="134,371,0,0" Stroke="Black" VerticalAlignment="Top" Width="73" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
+        <Rectangle x:Name="rectangle_23" Fill="#F0F8FF" HorizontalAlignment="Left" Height="62" Margin="225,371,0,0" Stroke="Black" VerticalAlignment="Top" Width="73" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
+        <Rectangle x:Name="rectangle_24" Fill="#F0F8FF" HorizontalAlignment="Left" Height="62" Margin="317,371,0,0" Stroke="Black" VerticalAlignment="Top" Width="73" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
+        <Rectangle x:Name="rectangle_20" Fill="#F0F8FF" HorizontalAlignment="Left" Height="61" Margin="406,293,0,0" Stroke="Black" VerticalAlignment="Top" Width="73" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
+
+
+        <Label x:Name="labelTime" Content="00:00:00" HorizontalAlignment="Left" Margin="591,185,0,0" VerticalAlignment="Top" FontSize="36" FontWeight="Bold" FontStyle="Italic"/>
+        <Button x:Name="buttonReset" Content="Reset" HorizontalAlignment="Left" Height="38" Margin="591,248,0,0" VerticalAlignment="Top" Width="152" Click="buttonReset_Click"/>
+        <Label Content="Kliknięć: " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="591,140,0,0" FontSize="16"/>
+        <Label x:Name="labelClicks" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="677,140,0,0" FontSize="16" FontWeight="Bold" FontStyle="Italic"/>
 
     </Grid>
 </Window>
