@@ -59,9 +59,12 @@ namespace Memory
                 rec.IsEnabled = true;
             }
 
+            // w przyszlosci mozna by ustawic np pobieranie obrazkow do Kart z roznych zrodel
+            // aktualnie dostepnie jest jedynie pobieranie z Resources
+            IBitmapImageList list = new BitmapImageListFromResources();
 
             // generuje wszystkie pary karty dla dostepnych pol
-            Card.GenerateAllCards(RectangleList);
+            Card.GenerateAllCards(RectangleList, list);
 
 
             // tworzy timer (0,5 sekundowy) po wybraniu nieprawidlowej pary
@@ -128,7 +131,7 @@ namespace Memory
                 // wyswietla odpowiedni obraz w odpowiednim polu
                 R.Fill = new ImageBrush
                 {
-                    ImageSource = new BitmapImage(clickedCard.ImageUri)
+                    ImageSource = clickedCard.CardImage
                 };
                 // dezaktywuje mozliwosc ponownego klikniecia
                 R.IsEnabled = false;
@@ -147,7 +150,7 @@ namespace Memory
                     List<Card> clicked = Card.CardList.Where(element => element.IsClicked).ToList();
 
                     // jesli obydwa klikniete pola maja ten sam obraz
-                    if(clicked[0].ImageUri == clicked[1].ImageUri)
+                    if(clicked[0].CardImage == clicked[1].CardImage)
                     {
                         // resetuje licznik aktualnie porownywach kart
                         UserConfig.ClickedCount = 0;

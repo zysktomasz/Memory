@@ -3,64 +3,63 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace Memory
 {
+    /// <summary>
+    /// klasa Card tworzy obiekty skladajace sie z:
+    /// obrazka (BitmapImage), flagi IsClicked, obiektu Rectangle (pola UI odpowiadajacemu danej karcie)
+    /// oraz udostepnia statyczna liste aktywnych kart dla wszystkich pol
+    /// </summary>
     class Card
     {
-        public Rectangle CorrespondingRectangle { get; set; }
-        public Uri ImageUri { get; set; }
+        public Rectangle CorrespondingRectangle { get; set; } // obiekt w WPF odpowiadajacy obiektowi Karty
+        public BitmapImage CardImage { get; set; }
         public bool IsClicked { get; set; }
+        static Random rnd = new Random();
 
         public static List<Card> CardList = new List<Card>();
 
-        public Card(Rectangle correspondingRectangle, Uri imageUri)
+        public Card(Rectangle correspondingRectangle, BitmapImage cardImage)
         {
             CorrespondingRectangle = correspondingRectangle;
-            ImageUri = imageUri;
+            CardImage = cardImage;
             IsClicked = false;
-            CardList.Add(this);
         }
 
-        public static void GenerateAllCards(List<Rectangle> RectangleList)
+        /// <summary>
+        /// metoda GenerateAllCards
+        /// generuje liste kart dla wszystkich pol
+        /// laczac obiekty Rectangle z UI WPF oraz liste obrazkow tworzonych przez klase spod IBitmapImageList
+        /// </summary>
+        public static void GenerateAllCards(List<Rectangle> RectangleList, IBitmapImageList lista)
         {
+            // lista gotowych obrazkow
+            List<BitmapImage> list = lista.BitmapImageList;
 
-            // utworzenie listy z dodanymi do projektu zdjeciami Card
-            FileListExtract.FindAllFiles();
+            int CardsToGenerate = RectangleList.Count / 2; // generujemy jedna karte dla dwoch pol (pary)
 
-            int CardsToGenerate = RectangleList.Count / 2;
 
-            // dziala dla kazdej pary
             for (int i = 0; i < CardsToGenerate; i++)
             {
                 // pobiera losowe zdjecie dla pary
-                Random rnd = new Random();
-                int chosenImage = rnd.Next(FileListExtract.FileList.Count - 1);
-                Uri tempUri = new Uri((String.Format("pack://application:,,,/{0}", FileListExtract.FileList[chosenImage])));
+                int chosenImage = rnd.Next(list.Count);
+                BitmapImage tempBitmapImage = list[chosenImage];
                 // usuwa wybrane zdjecie (zeby go nie uzyc ponownie)
-                FileListExtract.FileList.RemoveAt(chosenImage);
+                list.RemoveAt(chosenImage);
 
-
-                // pobiera losowy rectangle i tworzy Card o wybranym wyzej Uri
-                int chosenRectangle = rnd.Next(RectangleList.Count - 1);
-                Card temp = new Card(RectangleList[chosenRectangle], tempUri);
-                // usuwa wybrany rectangle (zeby go nie uzyc ponownie)
-                RectangleList.RemoveAt(chosenRectangle);
-
-                // pobiera kolejny, losowy rectangle i tworzy Card o tym samym Uri co poprzedni (otrzymujemy pare pol o tych samych obiektach)
-                chosenRectangle = rnd.Next(RectangleList.Count - 1);
-                temp = new Card(RectangleList[chosenRectangle], tempUri);
-                // usuwa wybrany rectangle (zeby go nie uzyc ponownie)
-                RectangleList.RemoveAt(chosenRectangle);
-
+                // tworzy dwie Karty o tym samym obrazku dla dwoch roznych pol
+                for (int j = 0; j < 2; j++)
+                {
+                    int chosenRectangle = rnd.Next(RectangleList.Count - 1);
+                    // dodaje nowa karte do listy
+                    CardList.Add(new Card(RectangleList[chosenRectangle], tempBitmapImage));
+                    // usuwa wybrany rectangle (zeby go nie uzyc ponownie)
+                    RectangleList.RemoveAt(chosenRectangle);
+                }
             }
-
-
-
-
         }
-
-
     }
 }

@@ -7,8 +7,14 @@ using System.Windows.Media.Imaging;
 
 namespace Memory
 {
+    /// <summary>
+    /// Interface umozliwiajacy generowanie listy obrazkow z roznych zrodel
+    /// aktualnie dziedziczy z niego jedynie
+    /// klasa BitmapImageListFromResources - tworzy liste na podstawie obrazkow z Resources
+    /// </summary>
     interface IBitmapImageList
     {
-        List<BitmapImage> GenerateBitmapImageList();
+        List<BitmapImage> BitmapImageList { get; set; }
+        void GenerateBitmapImageList();
     }
 }
