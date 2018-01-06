@@ -51,9 +51,16 @@ namespace Memory
             };
 
             // dodanie eventhandlerow dla kazdego pola
+            //foreach (var rec in RectangleList)
+            //{
+            //    rec.MouseLeftButtonDown += Rectangle_MouseLeftButtonDown;
+            //}
+
+            // "resetuje" wszystkie pola (ustawia tlo na kolor, i wlacza mozliwosc klikniecia)
             foreach (var rec in RectangleList)
             {
-                rec.MouseLeftButtonDown += Rectangle_MouseLeftButtonDown;
+                rec.Fill = Brushes.AliceBlue;
+                rec.IsEnabled = true;
             }
 
 
@@ -75,6 +82,12 @@ namespace Memory
         // timer po wybraniu niepasujacej pary
         private void incorrectCardPairTimer_Tick(object sender, EventArgs e)
         {
+            HidenWrongCardPair();
+            incorrectCardPairTimer.IsEnabled = false;
+        }
+
+        private void HidenWrongCardPair()
+        {
             foreach (var card in Card.CardList.Where(element => element.IsClicked).ToList())
             {
                 card.CorrespondingRectangle.Fill = Brushes.AliceBlue;
@@ -84,8 +97,7 @@ namespace Memory
 
             // resetuje ilosc kliknietych
             UserConfig.ClickedCount = 0;
-            // wylacza timer
-            incorrectCardPairTimer.IsEnabled = false;
+            
         }
 
         // timer po wybraniu niepasujacej pary
@@ -156,7 +168,6 @@ namespace Memory
                     // jesli wybrane karty sa rozne
                     else
                     {
-
                         // uruchamia timer (czas na zapamietanie ulozenia kart)
                         incorrectCardPairTimer.Start();
                     }
@@ -166,16 +177,20 @@ namespace Memory
 
         private void buttonReset_Click(object sender, RoutedEventArgs e)
         {
+            incorrectCardPairTimer.IsEnabled = false;
+            HidenWrongCardPair();
             //Process.Start(Application.ResourceAssembly.Location);
             //Application.Current.Shutdown();
+            startGameTimer.IsEnabled = false;
             timeInS = 0;
-            //firstClick = false;
-            //UserConfig.ClickedCount = 0;
-            //UserConfig.RevealedCards = 0;
-            //Card.CardList.Clear();
-            //startGameTimer.IsEnabled = false;
+            firstClick = false;
+            UserConfig.ClickedCount = 0;
+            UserConfig.RevealedCards = 0;
+            Card.CardList.Clear();
+            startGameTimer.Stop();
+            labelTime.Content = "00:00:00";
             //InitializeComponent();
-            //InitializeMemoryLayout();
+            InitializeMemoryLayout();
         }
     }
 }

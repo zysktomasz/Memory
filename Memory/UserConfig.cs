@@ -10,6 +10,7 @@ namespace Memory
     {
         public static int ClickedCount = 0;
         public static int RevealedCards = 0;
+        public static int Clicks = 0;
 
         public static bool CheckForWin()
         {
