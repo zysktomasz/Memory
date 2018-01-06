@@ -52,12 +52,6 @@ namespace Memory
                 rectangle_21, rectangle_22, rectangle_23, rectangle_24
             };
 
-            // dodanie eventhandlerow dla kazdego pola
-            //foreach (var rec in RectangleList)
-            //{
-            //    rec.MouseLeftButtonDown += Rectangle_MouseLeftButtonDown;
-            //}
-
             // "resetuje" wszystkie pola (ustawia tlo na kolor, i wlacza mozliwosc klikniecia)
             foreach (var rec in RectangleList)
             {
