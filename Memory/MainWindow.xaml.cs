@@ -25,8 +25,8 @@ namespace Memory
     /// </summary>
     public partial class MainWindow : Window
     {
-        private DispatcherTimer incorrectCardPairTimer;
-        private DispatcherTimer startGameTimer;
+        DispatcherTimer incorrectCardPairTimer;
+        DispatcherTimer startGameTimer;
         int timeInS = 0;
         bool firstClick = false;
 
@@ -39,8 +39,6 @@ namespace Memory
         private void InitializeMemoryLayout()
         {
 
-            // utworzenie listy z dodanymi do projektu zdjeciami Card
-            FileListExtract.FindAllFiles();
 
             // utworzenie listy dostepnych pol gry
             // TODO - automatyczne generowanie podanej ilosci pol
@@ -74,7 +72,7 @@ namespace Memory
 
             // tworzy timer (0,5 sekundowy) po wybraniu nieprawidlowej pary
             incorrectCardPairTimer = new DispatcherTimer();
-            incorrectCardPairTimer.Tick += new EventHandler(incorrectCardPairTimer_Tick);
+            incorrectCardPairTimer.Tick += new EventHandler(IncorrectCardPairTimer_Tick);
             incorrectCardPairTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
 
             // tworzy timer na rozpoczecie rozgrywki
@@ -84,7 +82,7 @@ namespace Memory
         }
         
         // timer po wybraniu niepasujacej pary
-        private void incorrectCardPairTimer_Tick(object sender, EventArgs e)
+        private void IncorrectCardPairTimer_Tick(object sender, EventArgs e)
         {
             HidenWrongCardPair();
             incorrectCardPairTimer.IsEnabled = false;

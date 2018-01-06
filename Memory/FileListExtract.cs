@@ -11,7 +11,7 @@ namespace Memory
 {
     // klasa sluzy do utworzenia listy z nazwami plikow (zdjec)
     // na podstawie ktorej, klasa Card utworzy mozliwe pary
-    abstract class FileListExtract
+    class FileListExtract
     {
         public static List<string> FileList { get; set; }
 

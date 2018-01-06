@@ -26,6 +26,9 @@ namespace Memory
         public static void GenerateAllCards(List<Rectangle> RectangleList)
         {
 
+            // utworzenie listy z dodanymi do projektu zdjeciami Card
+            FileListExtract.FindAllFiles();
+
             int CardsToGenerate = RectangleList.Count / 2;
 
             // dziala dla kazdej pary
