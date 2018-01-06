@@ -22,7 +22,7 @@
         <Label x:Name="labelTime" Content="00:00:00" HorizontalAlignment="Left" Margin="477,85,0,0" VerticalAlignment="Top" FontSize="36" FontWeight="Bold" FontStyle="Italic"/>
         <Button x:Name="buttonReset" Content="Reset" HorizontalAlignment="Left" Height="38" Margin="477,148,0,0" VerticalAlignment="Top" Width="152" Click="buttonReset_Click"/>
         <Label Content="Kliknięć: " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="477,40,0,0" FontSize="16"/>
-        <Label x:Name="labelKlikniec" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="563,40,0,0" FontSize="16" FontWeight="Bold" FontStyle="Italic"/>
+        <Label x:Name="labelClicks" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="563,40,0,0" FontSize="16" FontWeight="Bold" FontStyle="Italic"/>
 
     </Grid>
 </Window>

@@ -114,6 +114,7 @@ namespace Memory
         // utworzenie eventu
         void Rectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            
             // sprawdza czy to pierwsze klikniecie na pole (jesli tak, to odpala timer)
             if(firstClick == false)
             {
@@ -124,7 +125,8 @@ namespace Memory
             // TODO upewnic sie, ze nie klika sie 2 razy tego samego
             if (UserConfig.ClickedCount < 2)
             {
-               
+                UserConfig.Clicks++;
+                labelClicks.Content = UserConfig.Clicks;
                 Card clickedCard = Card.CardList.Find(card => card.CorrespondingRectangle == (Rectangle)sender);
                 Rectangle R = clickedCard.CorrespondingRectangle;
                 // wyswietla odpowiedni obraz w odpowiednim polu
@@ -179,6 +181,7 @@ namespace Memory
         {
             incorrectCardPairTimer.IsEnabled = false;
             HidenWrongCardPair();
+            
             //Process.Start(Application.ResourceAssembly.Location);
             //Application.Current.Shutdown();
             startGameTimer.IsEnabled = false;
@@ -186,6 +189,8 @@ namespace Memory
             firstClick = false;
             UserConfig.ClickedCount = 0;
             UserConfig.RevealedCards = 0;
+            UserConfig.Clicks = 0;
+            labelClicks.Content = UserConfig.Clicks;
             Card.CardList.Clear();
             startGameTimer.Stop();
             labelTime.Content = "00:00:00";
