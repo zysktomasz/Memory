@@ -12,15 +12,6 @@ namespace Memory
         public static int RevealedCards = 0;
         public static int Clicks = 0;
 
-        public static bool CheckForWin()
-        {
-            // aktualizuje licznik dobrze trafionych par
-            RevealedCards += 2;
-            // jesli ilosc trafionych == ilosci dostepnych kart
-            if (RevealedCards == Card.CardList.Count)
-                return true;
-            else
-                return false;
-        }
+
     }
 }

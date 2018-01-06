@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Memory"
         mc:Ignorable="d"
-        Title="Gra Memory" Height="544.156" Width="766.002">
+        Title="Gra Memory" Height="486.556" Width="766.002">
     <Grid>
         <Rectangle x:Name="rectangle_1" Fill="#F0F8FF" HorizontalAlignment="Left" Height="71" Margin="19,65,0,0" Stroke="Black" VerticalAlignment="Top" Width="74" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
         <Rectangle x:Name="rectangle_2" Fill="#F0F8FF" HorizontalAlignment="Left" Height="71" Margin="115,65,0,0" Stroke="Black" VerticalAlignment="Top" Width="74" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
@@ -37,6 +37,8 @@
         <Button x:Name="buttonReset" Content="Reset" HorizontalAlignment="Left" Height="38" Margin="591,248,0,0" VerticalAlignment="Top" Width="152" Click="buttonReset_Click"/>
         <Label Content="Kliknięć: " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="591,140,0,0" FontSize="16"/>
         <Label x:Name="labelClicks" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="677,140,0,0" FontSize="16" FontWeight="Bold" FontStyle="Italic"/>
+        <Label Content="Gra Memory" Margin="198,-1,264,0" FontSize="48" FontFamily="Trebuchet MS" FontWeight="ExtraBold" FontStretch="SemiCondensed" Background="{x:Null}" Foreground="#FF5F0FBD" VerticalAlignment="Top" HorizontalAlignment="Center" Width="298"/>
+        <Label Content="Autor: Tomasz Zysk" HorizontalAlignment="Left" Margin="656,423,0,0" VerticalAlignment="Top" FontStyle="Italic" FontSize="10"/>
 
     </Grid>
 </Window>

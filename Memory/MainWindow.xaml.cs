@@ -27,8 +27,8 @@ namespace Memory
     {
         DispatcherTimer incorrectCardPairTimer;
         DispatcherTimer startGameTimer;
-        int timeInS = 0;
-        bool firstClick = false;
+        int timeInS = 0; // czas trwania aktualnej rozgrywki
+        bool firstClick = false; // flaga dla pierwszego klikniecia (do odpalenia timera rozgrywki dopiero po pierwszym kliknieciu)
 
         public MainWindow()
         {
@@ -38,9 +38,8 @@ namespace Memory
 
         private void InitializeMemoryLayout()
         {
-
-
             // utworzenie listy dostepnych pol gry
+            // aktualnie jest to stala ilosc :|
             // TODO - automatyczne generowanie podanej ilosci pol
             List<Rectangle> RectangleList = new List<Rectangle>
             {
@@ -63,7 +62,7 @@ namespace Memory
             // aktualnie dostepnie jest jedynie pobieranie z Resources
             IBitmapImageList list = new BitmapImageListFromResources();
 
-            // generuje wszystkie pary karty dla dostepnych pol
+            // generuje wszystkie karty dla dostepnych pol
             Card.GenerateAllCards(RectangleList, list);
 
 
@@ -77,14 +76,19 @@ namespace Memory
             startGameTimer.Interval = TimeSpan.FromSeconds(1);
             startGameTimer.Tick += new EventHandler(startGameTimer_Tick);
         }
-        
-        // timer po wybraniu niepasujacej pary
+
+        /// <summary>
+        /// event - po 500ms chowa odkryta, niepasujaca pare
+        /// </summary>
         private void IncorrectCardPairTimer_Tick(object sender, EventArgs e)
         {
             HidenWrongCardPair();
-            incorrectCardPairTimer.IsEnabled = false;
+            incorrectCardPairTimer.IsEnabled = false; // wykonuje sie tylko raz
         }
 
+        /// <summary>
+        /// Interaction logic for MainWindow.xaml
+        /// </summary>
         private void HidenWrongCardPair()
         {
             foreach (var card in Card.CardList.Where(element => element.IsClicked).ToList())
@@ -94,106 +98,122 @@ namespace Memory
                 card.IsClicked = false;
             }
 
-            // resetuje ilosc kliknietych
+            // resetuje ilosc odkrytych kart
             UserConfig.ClickedCount = 0;
-            
         }
 
-        // timer po wybraniu niepasujacej pary
+        /// <summary>
+        /// event timera rozpoczecia rozgrywki
+        /// aktywuje sie po pierwszym klikniecu w ktorekolwiek pole
+        /// </summary>
         private void startGameTimer_Tick(object sender, EventArgs e)
         {
             timeInS += 1;
             TimeSpan time = TimeSpan.FromSeconds(timeInS);
-            string str = time.ToString(@"hh\:mm\:ss\:fff");
-            labelTime.Content = str;
+            string str = time.ToString();
+            labelTime.Content = str; // kiedy nie wiesz jak bindowac ;|
         }
 
 
 
-        // utworzenie eventu
+        /// <summary>
+        /// event - aktywowaniu po kliknieciu kazdego aktywnego(nieodkrytego) pola
+        /// </summary>
         void Rectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            
-            // sprawdza czy to pierwsze klikniecie na pole (jesli tak, to odpala timer)
+            // sprawdza czy to pierwsze klikniecie na pole (false oznacza, ze nie bylo jeszcze pierwszego klikniecia)
             if(firstClick == false)
             {
                 firstClick = true;
                 startGameTimer.Start();
             }
-            // jesli mozna kliknac
-            // TODO upewnic sie, ze nie klika sie 2 razy tego samego
+
+            // w jednym czasie mozna porownywac maksymalnie 2 karty (pare)
+            // wiec odkryto 1 lub 0 kart, to mozna odkryc kolejna
             if (UserConfig.ClickedCount < 2)
             {
-                UserConfig.Clicks++;
-                labelClicks.Content = UserConfig.Clicks;
+                UserConfig.Clicks++; // calkowita ilosc klikniec w pola
+                labelClicks.Content = UserConfig.Clicks; // todo binding
+
+                // znajduje karte polaczona z wlasnie kliknietym polem (rectangle)
                 Card clickedCard = Card.CardList.Find(card => card.CorrespondingRectangle == (Rectangle)sender);
-                Rectangle R = clickedCard.CorrespondingRectangle;
                 // wyswietla odpowiedni obraz w odpowiednim polu
-                R.Fill = new ImageBrush
+                clickedCard.CorrespondingRectangle.Fill = new ImageBrush
                 {
                     ImageSource = clickedCard.CardImage
                 };
-                // dezaktywuje mozliwosc ponownego klikniecia
-                R.IsEnabled = false;
+                clickedCard.CorrespondingRectangle.IsEnabled = false; // dezaktywuje mozliwosc ponownego klikniecia
+                clickedCard.IsClicked = true; // ustawia flage Karty, ze jest kliknieta
+                UserConfig.ClickedCount++; // aktualizuje ilosc sprawdzanych kart
 
-                // ustawia flage Karty, ze jest kliknieta
-                clickedCard.IsClicked = true;
-
-                // aktualizuje ilosc kliknietych
-                UserConfig.ClickedCount++;
-                
-                // jesli klikniete sa 2 rozne pole
-                if(UserConfig.ClickedCount == 2)
+                // jesli sprawdzono dwie karty
+                if (UserConfig.ClickedCount == 2)
                 {
-                    // clicked - lista Card o fladze IsClicked == true
-                    // ClickedCount wynosi 2, wiec wiadomo, ze lista ma zawierac 2 elementy na ktorych dzialamy
-                    List<Card> clicked = Card.CardList.Where(element => element.IsClicked).ToList();
-
-                    // jesli obydwa klikniete pola maja ten sam obraz
-                    if(clicked[0].CardImage == clicked[1].CardImage)
-                    {
-                        // resetuje licznik aktualnie porownywach kart
-                        UserConfig.ClickedCount = 0;
-
-                        // sprawdza czy wygrano
-                        if (UserConfig.CheckForWin())
-                        {
-                            startGameTimer.Stop();
-                            MessageBox.Show("GRATULACJE, WYGRANA");
-                        }
-
-                        // zmienia flage IsClicked na false (karta nie jest aktywna)
-                        clicked[0].IsClicked = false;
-                        clicked[1].IsClicked = false;
-                    }
-                    // jesli wybrane karty sa rozne
-                    else
-                    {
-                        // uruchamia timer (czas na zapamietanie ulozenia kart)
-                        incorrectCardPairTimer.Start();
-                    }
+                    ClickedCardsValidate();
                 }
             }
         }
 
+        /// <summary>
+        /// metoda walidujaca rownowartosc obydwu sprawdzanych kart
+        /// </summary>
+        private void ClickedCardsValidate()
+        {
+            // clicked - lista sprawdzanych kart (o fladze IsClicked)
+            // UserConfig.ClickedCount wynosi 2, wiec wiadomo, ze lista ma zawierac 2 elementy na ktorych dzialamy
+            List<Card> clicked = Card.CardList.Where(element => element.IsClicked).ToList();
+
+            // jesli obydwa klikniete pola maja ten sam obraz
+            if (clicked[0].CardImage == clicked[1].CardImage)
+            {
+                UserConfig.ClickedCount = 0; // resetuje licznik aktualnie porownywach kart
+                CheckForWin(); // sprawdza czy wygrano juz cala gre
+                // zmienia flage IsClicked na false (karta nie jest juz sprawdzana)
+                clicked[0].IsClicked = false;
+                clicked[1].IsClicked = false;
+            }
+            // jesli wybrane karty sa rozne
+            else
+            {
+                incorrectCardPairTimer.Start(); // uruchamia timer (czas na zapamietanie ulozenia kart)
+            }
+        }
+
+        /// <summary>
+        /// metoda sprawdza czy skonczono juz cala rozgrywke
+        /// </summary>
+        private void CheckForWin()
+        {
+            UserConfig.RevealedCards += 2; // aktualizuje licznik dobrze trafionych par
+            // jesli juz wszystkie karte sa odkryte
+            if (UserConfig.RevealedCards == Card.CardList.Count)
+            {
+                startGameTimer.Stop();
+                MessageBox.Show("GRATULACJE, WYGRANA");
+            }
+        }
+
+        /// <summary>
+        /// event - na klikniecie resetowania planszy
+        /// </summary>
         private void buttonReset_Click(object sender, RoutedEventArgs e)
         {
-            incorrectCardPairTimer.IsEnabled = false;
+            // zeby nie zbugowac - jesli resetujemy w trakcie oczekiwania na schowanie sprawdzanej, niegodnej pary, to zatrzymujemy odliczanie
+            // i sami uzywamy metody ukrywajacej
+            incorrectCardPairTimer.IsEnabled = false; 
             HidenWrongCardPair();
             
-            //Process.Start(Application.ResourceAssembly.Location);
-            //Application.Current.Shutdown();
+            // resetujemy jakies globalne i statyczne zmienne
             startGameTimer.IsEnabled = false;
             timeInS = 0;
             firstClick = false;
             UserConfig.ClickedCount = 0;
             UserConfig.RevealedCards = 0;
             UserConfig.Clicks = 0;
-            labelClicks.Content = UserConfig.Clicks;
+            labelClicks.Content = UserConfig.Clicks; // bind :(
             Card.CardList.Clear();
             startGameTimer.Stop();
-            labelTime.Content = "00:00:00";
-            //InitializeComponent();
+            labelTime.Content = "00:00:00"; // bind :(
             InitializeMemoryLayout();
         }
     }

@@ -22,7 +22,7 @@ namespace Memory
 
         public static List<Card> CardList = new List<Card>();
 
-        public Card(Rectangle correspondingRectangle, BitmapImage cardImage)
+        private Card(Rectangle correspondingRectangle, BitmapImage cardImage)
         {
             CorrespondingRectangle = correspondingRectangle;
             CardImage = cardImage;
