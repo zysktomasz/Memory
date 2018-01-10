@@ -80,6 +80,7 @@
     </ApplicationDefinition>
     <Compile Include="BitmapImageListFromResources.cs" />
     <Compile Include="IBitmapImageList.cs" />
+    <Compile Include="MemoryBoard.cs" />
     <Compile Include="UserConfig.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

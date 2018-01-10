@@ -47,17 +47,14 @@ namespace Memory
                 // pobiera losowe zdjecie dla pary
                 int chosenImage = rnd.Next(list.Count);
                 BitmapImage tempBitmapImage = list[chosenImage];
-                // usuwa wybrane zdjecie (zeby go nie uzyc ponownie)
-                list.RemoveAt(chosenImage);
+                list.RemoveAt(chosenImage); // usuwa wybrane zdjecie (zeby go nie uzyc ponownie)
 
                 // tworzy dwie Karty o tym samym obrazku dla dwoch roznych pol
                 for (int j = 0; j < 2; j++)
                 {
                     int chosenRectangle = rnd.Next(RectangleList.Count - 1);
-                    // dodaje nowa karte do listy
                     CardList.Add(new Card(RectangleList[chosenRectangle], tempBitmapImage));
-                    // usuwa wybrany rectangle (zeby go nie uzyc ponownie)
-                    RectangleList.RemoveAt(chosenRectangle);
+                    RectangleList.RemoveAt(chosenRectangle); // usuwa wybrany rectangle (zeby go nie uzyc ponownie)
                 }
             }
         }

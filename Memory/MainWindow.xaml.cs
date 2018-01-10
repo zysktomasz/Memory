@@ -25,6 +25,7 @@ namespace Memory
     /// </summary>
     public partial class MainWindow : Window
     {
+        MemoryBoard board = new MemoryBoard(); // tworzy plansze po wlaczeniu gry
         DispatcherTimer incorrectCardPairTimer;
         DispatcherTimer startGameTimer;
         int timeInS = 0; // czas trwania aktualnej rozgrywki
@@ -34,6 +35,7 @@ namespace Memory
         {
             InitializeComponent();
             InitializeMemoryLayout();
+            gridMemoryBoard.DataContext = board;
         }
 
         private void InitializeMemoryLayout()
@@ -99,7 +101,7 @@ namespace Memory
             }
 
             // resetuje ilosc odkrytych kart
-            UserConfig.ClickedCount = 0;
+            board.ClickedCount = 0;
         }
 
         /// <summary>
@@ -130,10 +132,9 @@ namespace Memory
 
             // w jednym czasie mozna porownywac maksymalnie 2 karty (pare)
             // wiec odkryto 1 lub 0 kart, to mozna odkryc kolejna
-            if (UserConfig.ClickedCount < 2)
+            if (board.ClickedCount < 2)
             {
-                UserConfig.Clicks++; // calkowita ilosc klikniec w pola
-                labelClicks.Content = UserConfig.Clicks; // todo binding
+                board.Clicks++; // calkowita ilosc klikniec w pola
 
                 // znajduje karte polaczona z wlasnie kliknietym polem (rectangle)
                 Card clickedCard = Card.CardList.Find(card => card.CorrespondingRectangle == (Rectangle)sender);
@@ -144,10 +145,10 @@ namespace Memory
                 };
                 clickedCard.CorrespondingRectangle.IsEnabled = false; // dezaktywuje mozliwosc ponownego klikniecia
                 clickedCard.IsClicked = true; // ustawia flage Karty, ze jest kliknieta
-                UserConfig.ClickedCount++; // aktualizuje ilosc sprawdzanych kart
+                board.ClickedCount++; // aktualizuje ilosc sprawdzanych kart
 
                 // jesli sprawdzono dwie karty
-                if (UserConfig.ClickedCount == 2)
+                if (board.ClickedCount == 2)
                 {
                     ClickedCardsValidate();
                 }
@@ -166,7 +167,7 @@ namespace Memory
             // jesli obydwa klikniete pola maja ten sam obraz
             if (clicked[0].CardImage == clicked[1].CardImage)
             {
-                UserConfig.ClickedCount = 0; // resetuje licznik aktualnie porownywach kart
+                board.ClickedCount = 0; // resetuje licznik aktualnie porownywach kart
                 CheckForWin(); // sprawdza czy wygrano juz cala gre
                 // zmienia flage IsClicked na false (karta nie jest juz sprawdzana)
                 clicked[0].IsClicked = false;
@@ -184,9 +185,9 @@ namespace Memory
         /// </summary>
         private void CheckForWin()
         {
-            UserConfig.RevealedCards += 2; // aktualizuje licznik dobrze trafionych par
+            board.RevealedCards += 2; // aktualizuje licznik dobrze trafionych par
             // jesli juz wszystkie karte sa odkryte
-            if (UserConfig.RevealedCards == Card.CardList.Count)
+            if (board.RevealedCards == Card.CardList.Count)
             {
                 startGameTimer.Stop();
                 MessageBox.Show("GRATULACJE, WYGRANA");
@@ -207,10 +208,9 @@ namespace Memory
             startGameTimer.IsEnabled = false;
             timeInS = 0;
             firstClick = false;
-            UserConfig.ClickedCount = 0;
-            UserConfig.RevealedCards = 0;
-            UserConfig.Clicks = 0;
-            labelClicks.Content = UserConfig.Clicks; // bind :(
+            board.ClickedCount = 0;
+            board.RevealedCards = 0;
+            board.Clicks = 0;
             Card.CardList.Clear();
             startGameTimer.Stop();
             labelTime.Content = "00:00:00"; // bind :(
