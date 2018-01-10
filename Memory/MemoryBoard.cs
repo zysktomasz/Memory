@@ -16,7 +16,22 @@ namespace Memory
 
         public int ClickedCount { get; set; }
         public int RevealedCards { get; set; }
+        public string TimePassedString { get; set; } = "00:00:00";
+
         public event PropertyChangedEventHandler PropertyChanged;
+
+        // przechowuje czas sekund od rozpoczecia rozgrywki
+        private int timePassed;
+        public int TimePassed
+        {
+            get { return timePassed; }
+            set {
+                timePassed = value;
+                TimePassedString = TimeSpan.FromSeconds(value).ToString();
+                OnPropertyChanged("TimePassedString"); // aktywuje event powiazany z labelem od czasu w UI
+            }
+        }
+
 
         private int clicks;
         public int Clicks

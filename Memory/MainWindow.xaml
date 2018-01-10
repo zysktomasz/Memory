@@ -33,7 +33,7 @@
         <Rectangle x:Name="rectangle_20" Fill="#F0F8FF" HorizontalAlignment="Left" Height="70" Margin="115,338,0,0" Stroke="Black" VerticalAlignment="Top" Width="74" Cursor="Hand" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
 
 
-        <Label x:Name="labelTime" Content="00:00:00" HorizontalAlignment="Left" Margin="591,185,0,0" VerticalAlignment="Top" FontSize="36" FontWeight="Bold" FontStyle="Italic"/>
+        <Label x:Name="labelTime" Content="{Binding TimePassedString, Mode=OneWay}" HorizontalAlignment="Left" Margin="591,185,0,0" VerticalAlignment="Top" FontSize="36" FontWeight="Bold" FontStyle="Italic"/>
         <Button x:Name="buttonReset" Content="Reset" HorizontalAlignment="Left" Height="38" Margin="591,248,0,0" VerticalAlignment="Top" Width="152" Click="buttonReset_Click"/>
         <Label Content="Kliknięć: " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="591,140,0,0" FontSize="16"/>
         <Label x:Name="labelClicks" Content="{Binding Clicks, Mode=OneWay}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="677,140,0,0" FontSize="16" FontWeight="Bold" FontStyle="Italic"/>

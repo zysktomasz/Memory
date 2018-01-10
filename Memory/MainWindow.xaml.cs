@@ -28,7 +28,6 @@ namespace Memory
         MemoryBoard board = new MemoryBoard(); // tworzy plansze po wlaczeniu gry
         DispatcherTimer incorrectCardPairTimer;
         DispatcherTimer startGameTimer;
-        int timeInS = 0; // czas trwania aktualnej rozgrywki
         bool firstClick = false; // flaga dla pierwszego klikniecia (do odpalenia timera rozgrywki dopiero po pierwszym kliknieciu)
 
         public MainWindow()
@@ -110,10 +109,7 @@ namespace Memory
         /// </summary>
         private void startGameTimer_Tick(object sender, EventArgs e)
         {
-            timeInS += 1;
-            TimeSpan time = TimeSpan.FromSeconds(timeInS);
-            string str = time.ToString();
-            labelTime.Content = str; // kiedy nie wiesz jak bindowac ;|
+            board.TimePassed += 1;
         }
 
 
@@ -206,14 +202,10 @@ namespace Memory
             
             // resetujemy jakies globalne i statyczne zmienne
             startGameTimer.IsEnabled = false;
-            timeInS = 0;
             firstClick = false;
-            board.ClickedCount = 0;
-            board.RevealedCards = 0;
-            board.Clicks = 0;
+            board = new MemoryBoard();
             Card.CardList.Clear();
             startGameTimer.Stop();
-            labelTime.Content = "00:00:00"; // bind :(
             InitializeMemoryLayout();
         }
     }
