@@ -25,23 +25,22 @@ namespace Memory
     /// </summary>
     public partial class MainWindow : Window
     {
-        MemoryBoard board = new MemoryBoard(); // tworzy plansze po wlaczeniu gry
-        DispatcherTimer incorrectCardPairTimer;
-        DispatcherTimer startGameTimer;
+        MemoryBoard board; 
+        public static DispatcherTimer incorrectCardPairTimer;
+        public static DispatcherTimer startGameTimer;
         bool firstClick = false; // flaga dla pierwszego klikniecia (do odpalenia timera rozgrywki dopiero po pierwszym kliknieciu)
 
         public MainWindow()
         {
             InitializeComponent();
             InitializeMemoryLayout();
-            gridMemoryBoard.DataContext = board;
         }
 
         private void InitializeMemoryLayout()
         {
+            
+
             // utworzenie listy dostepnych pol gry
-            // aktualnie jest to stala ilosc :|
-            // TODO - automatyczne generowanie podanej ilosci pol
             List<Rectangle> RectangleList = new List<Rectangle>
             {
                 rectangle_1, rectangle_2, rectangle_3, rectangle_4,
@@ -63,9 +62,9 @@ namespace Memory
             // aktualnie dostepnie jest jedynie pobieranie z Resources
             IBitmapImageList list = new BitmapImageListFromResources();
 
-            // generuje wszystkie karty dla dostepnych pol
-            Card.GenerateAllCards(RectangleList, list);
-
+            // tworzy aktualnie rozgrywana plansze
+            board = new MemoryBoard(RectangleList, list);
+            gridMemoryBoard.DataContext = board; // udostepnia aktualna plansze do bindowania
 
             // tworzy timer (0,5 sekundowy) po wybraniu nieprawidlowej pary
             incorrectCardPairTimer = new DispatcherTimer();
@@ -83,24 +82,14 @@ namespace Memory
         /// </summary>
         private void IncorrectCardPairTimer_Tick(object sender, EventArgs e)
         {
-            HidenWrongCardPair();
-            incorrectCardPairTimer.IsEnabled = false; // wykonuje sie tylko raz
-        }
-
-        /// <summary>
-        /// Interaction logic for MainWindow.xaml
-        /// </summary>
-        private void HidenWrongCardPair()
-        {
-            foreach (var card in Card.CardList.Where(element => element.IsClicked).ToList())
+            foreach (var card in board.ListOfCards.AllCards.Where(element => element.IsClicked).ToList())
             {
                 card.CorrespondingRectangle.Fill = Brushes.AliceBlue;
                 card.CorrespondingRectangle.IsEnabled = true;
                 card.IsClicked = false;
             }
-
-            // resetuje ilosc odkrytych kart
-            board.ClickedCount = 0;
+            board.ClickedCount = 0; // resetuje ilosc odkrytych kart
+            incorrectCardPairTimer.IsEnabled = false; // wykonuje sie tylko raz
         }
 
         /// <summary>
@@ -125,87 +114,23 @@ namespace Memory
                 firstClick = true;
                 startGameTimer.Start();
             }
-
-            // w jednym czasie mozna porownywac maksymalnie 2 karty (pare)
-            // wiec odkryto 1 lub 0 kart, to mozna odkryc kolejna
-            if (board.ClickedCount < 2)
-            {
-                board.Clicks++; // calkowita ilosc klikniec w pola
-
-                // znajduje karte polaczona z wlasnie kliknietym polem (rectangle)
-                Card clickedCard = Card.CardList.Find(card => card.CorrespondingRectangle == (Rectangle)sender);
-                // wyswietla odpowiedni obraz w odpowiednim polu
-                clickedCard.CorrespondingRectangle.Fill = new ImageBrush
-                {
-                    ImageSource = clickedCard.CardImage
-                };
-                clickedCard.CorrespondingRectangle.IsEnabled = false; // dezaktywuje mozliwosc ponownego klikniecia
-                clickedCard.IsClicked = true; // ustawia flage Karty, ze jest kliknieta
-                board.ClickedCount++; // aktualizuje ilosc sprawdzanych kart
-
-                // jesli sprawdzono dwie karty
-                if (board.ClickedCount == 2)
-                {
-                    ClickedCardsValidate();
-                }
-            }
+            board.RectangleClick((Rectangle)sender);
         }
 
-        /// <summary>
-        /// metoda walidujaca rownowartosc obydwu sprawdzanych kart
-        /// </summary>
-        private void ClickedCardsValidate()
-        {
-            // clicked - lista sprawdzanych kart (o fladze IsClicked)
-            // UserConfig.ClickedCount wynosi 2, wiec wiadomo, ze lista ma zawierac 2 elementy na ktorych dzialamy
-            List<Card> clicked = Card.CardList.Where(element => element.IsClicked).ToList();
-
-            // jesli obydwa klikniete pola maja ten sam obraz
-            if (clicked[0].CardImage == clicked[1].CardImage)
-            {
-                board.ClickedCount = 0; // resetuje licznik aktualnie porownywach kart
-                CheckForWin(); // sprawdza czy wygrano juz cala gre
-                // zmienia flage IsClicked na false (karta nie jest juz sprawdzana)
-                clicked[0].IsClicked = false;
-                clicked[1].IsClicked = false;
-            }
-            // jesli wybrane karty sa rozne
-            else
-            {
-                incorrectCardPairTimer.Start(); // uruchamia timer (czas na zapamietanie ulozenia kart)
-            }
-        }
-
-        /// <summary>
-        /// metoda sprawdza czy skonczono juz cala rozgrywke
-        /// </summary>
-        private void CheckForWin()
-        {
-            board.RevealedCards += 2; // aktualizuje licznik dobrze trafionych par
-            // jesli juz wszystkie karte sa odkryte
-            if (board.RevealedCards == Card.CardList.Count)
-            {
-                startGameTimer.Stop();
-                MessageBox.Show("GRATULACJE, WYGRANA");
-            }
-        }
 
         /// <summary>
         /// event - na klikniecie resetowania planszy
         /// </summary>
         private void buttonReset_Click(object sender, RoutedEventArgs e)
         {
-            // zeby nie zbugowac - jesli resetujemy w trakcie oczekiwania na schowanie sprawdzanej, niegodnej pary, to zatrzymujemy odliczanie
-            // i sami uzywamy metody ukrywajacej
+            // wylacza ewentualny timer chowania niepasujacej pary
             incorrectCardPairTimer.IsEnabled = false; 
-            HidenWrongCardPair();
             
             // resetujemy jakies globalne i statyczne zmienne
             startGameTimer.IsEnabled = false;
-            firstClick = false;
-            board = new MemoryBoard();
-            Card.CardList.Clear();
             startGameTimer.Stop();
+            firstClick = false;
+
             InitializeMemoryLayout();
         }
     }
