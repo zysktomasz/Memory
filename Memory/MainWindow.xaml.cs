@@ -114,7 +114,7 @@ namespace Memory
                 firstClick = true;
                 startGameTimer.Start();
             }
-            board.RectangleClick((Rectangle)sender);
+            board.RectangleClick((Rectangle)e.Source);
         }
 
 
